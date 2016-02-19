@@ -1,0 +1,34 @@
+
+
+Implement the Canny edge detection algorithm.  Do so as follows:
+
+   a) Write a function to compute image gradients expressed as
+      magnitude and direction. The form should be:
+
+     [magnitude,orientation] = EdgeFilter(image, sigma)
+
+     In this case, sigma is the variance of the Gaussian filter you
+     must use to compute the derivatives.
+
+   b) Write a non-maximal suppression algorithm of the form
+
+     newMagnitudeImage = NonMaximalSuppression(magnitude,orientation)
+
+   c) Write a hysteresis thresholding algorithm of the form
+
+     BinaryEdgeImage = HysteresisThreshold(magnitudeImage,minThresh,
+     maxThresh)
+
+     As suggested above, the output should be a binary image.
+
+   To demonstrate the algorithm, apply the filter to the “BrainWeb”
+
+
+   Use the script Task1.m that performs each stage of the Canny
+   filter and displays the intermediate results in a separate
+   image. 
+  
+   Repeat the computations for Gaussian variance of 1, 2, 4 and 8.
+   You may choose your own thresholds, but you should display the
+   thresholds you use at each scale.
+

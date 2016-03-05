@@ -16,3 +16,17 @@ end
 % ----------------------------------- % 
 % -You have to write your code here-- %
 % ----------------------------------- % 
+
+[m n c] = size(featureImageIn);
+X = reshape(featureImageIn, m*n, c)';
+
+% main
+nColor = numberofClusters;
+[cluster, codebook] = cvKmeans(X, nColor);
+for i=1:size(codebook, 2)
+    idx = find(cluster == i);
+    Xvq(:,idx) = repmat(codebook(:,i), 1, length(idx));
+end
+
+segmentedImage = reshape(Xvq', m, n, c);
+

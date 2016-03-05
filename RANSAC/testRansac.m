@@ -3,18 +3,13 @@ function testRansac
 clear all
 clc
 
-
-outlrRatio = .4;
-
 inIM = imread('line.jpg');
-
-figure, imshow(inIM), title ('input'),hold on
-
 inIM = double(inIM);
 inIM = (inIM(:,:,1) + inIM(:,:,2) + inIM(:,:,3))/3;
 [M, N] = size(inIM);
 
 edgeImageIn = edge(inIM, 'canny');
+figure, imshow(edgeImageIn), title ('input'),hold on
 
 % get the image size
 [M, N] = size(edgeImageIn);
@@ -35,14 +30,19 @@ X = 0:N;
 
 plot(X,k1*X+b1,'r')
 
+lines(1) = 1 / b1;
+lines(2) = -k1 / b1;
+lines(3) = 1;
+
+for ii = 1 : size(lines, 1)
+    % display line equation
+    display(['line #' num2str(ii) ': ' num2str(lines(ii,1)) 'X + '...
+        num2str(lines(ii,2)) 'Y = ' num2str(lines(ii,3))]);
+    
+    % draw the lines
+    p_top = round((1 - lines(ii,2))/lines(ii,1));
+    p_bot = round((1 - N*lines(ii,2))/lines(ii,1));
+    line([1 N],[p_top p_bot],'Color','g','LineWidth',1)
 end
-
-function err = sqrError(k,b,pts)
-%	Calculate the square error of the fit
-
-theta = atan(-k);
-n = [cos(theta),-sin(theta)];
-pt1 = [0;b];
-err = sqrt(sum((n*(pts-repmat(pt1,1,size(pts,2)))).^2));
 
 end

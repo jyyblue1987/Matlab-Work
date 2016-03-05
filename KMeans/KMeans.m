@@ -27,19 +27,11 @@ function segmentedImage = KMeans(featureImageIn, numberofClusters, clusterCenter
         [cluster, codebook, distortion] = cvKmeans(X, numberofClusters);
         if distortion < min_dist
             min_dist = distortion;            
-            min_cluster = cluster;
-            min_codebook = codebook;
+            min_cluster = cluster;            
         end
     end
     
-    for i=1:size(min_codebook, 2)
-        idx = find(min_cluster == i);
-        Xvq(:,idx) = repmat(min_codebook(:,i), 1, length(idx));
-    end
-
-    segmentedImage = reshape(Xvq', m, n, c);
-    segmentedImage = segmentedImage(:,:,1:3);
-
+    segmentedImage = reshape(min_cluster, m, n) / numberofClusters;   
 end
 
 

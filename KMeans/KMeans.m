@@ -29,4 +29,5 @@ for i=1:size(codebook, 2)
 end
 
 segmentedImage = reshape(Xvq', m, n, c);
+segmentedImage = segmentedImage(:,:,1:3);
 

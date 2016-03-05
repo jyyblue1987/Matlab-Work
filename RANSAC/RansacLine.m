@@ -13,25 +13,28 @@ function lines = RansacLine(edgeImageIn, noIter, fitDistance, noPts, minD)
     % -You have to write your code here-- %
     % ----------------------------------- % 
 
-    pts = transpose([eIj, eIi]);
+    lines = ones(9, 3);
+    for i = 1 : 9
+        pts = transpose([eIj, eIi]);
 
-    [t,r] = ransacfitline(pts,noIter,fitDistance,noPts, minD);
+        [t,r] = ransacfitline(pts,noIter,fitDistance,noPts, minD);
 
-    k1 = -tan(t);
-    b1 = r/cos(t);
+        k1 = -tan(t);
+        b1 = r/cos(t);
 
-    lines(1) = 1 / b1;
-    lines(2) = -k1 / b1;
-    lines(3) = 1;
+        lines(i, 1) = 1 / b1;
+        lines(i, 2) = -k1 / b1;
+        lines(i, 3) = 1;
+    end
+    
 end
 
 function [ theta,rho ] = ransacfitline( pts,iterNum,thDist,noPts, minD )
     %RANSAC Use RANdom SAmple Consensus to fit a line
-    %	RESCOEF = RANSAC(PTS,ITERNUM,THDIST,THINLRRATIO) PTS is 2*n matrix including 
+    %	RESCOEF = RANSAC(PTS,ITERNUM,THDIST,NOPTS) PTS is 2*n matrix including 
     %	n points, ITERNUM is the number of iteration, THDIST is the inlier 
     %	distance threshold and ROUND(THINLRRATIO*SIZE(PTS,2)) is the inlier number threshold. The final 
     %	fitted line is RHO = sin(THETA)*x+cos(THETA)*y.
-    %	Yan Ke @ THUEE, xjed09@gmail.com
 
     sampleNum = 2;
     ptNum = size(pts,2);
@@ -47,6 +50,7 @@ function [ theta,rho ] = ransacfitline( pts,iterNum,thDist,noPts, minD )
         ptSample = pts(:,sampleIdx);
         d = ptSample(:,2)-ptSample(:,1);
        
+        % check distance two points
         if norm(d) < minD
             continue;
         end
@@ -58,7 +62,11 @@ function [ theta,rho ] = ransacfitline( pts,iterNum,thDist,noPts, minD )
         dist1 = n*(pts-repmat(ptSample(:,1),1,ptNum));
         inlier1 = find(abs(dist1) < thDist);
         inlrNum(p) = length(inlier1);
+        
+        % check inliner count
         if length(inlier1) < thInlr, continue; end
+        
+        % implement PCA to get direction vector angle
         ev = princomp(pts(:,inlier1)');
         d1 = ev(:,1);
         theta1(p) = -atan2(d1(2),d1(1)); % save the coefs

@@ -15,9 +15,7 @@ function lines = RansacLine(edgeImageIn, noIter, fitDistance, noPts, minD)
 
     pts = transpose([eIj, eIi]);
 
-    thInlrRatio = .1;
-    iterNum = noIter;
-    [t,r] = ransacfitline(pts,iterNum,fitDistance,noPts);
+    [t,r] = ransacfitline(pts,noIter,fitDistance,noPts, minD);
 
     k1 = -tan(t);
     b1 = r/cos(t);
@@ -27,7 +25,7 @@ function lines = RansacLine(edgeImageIn, noIter, fitDistance, noPts, minD)
     lines(3) = 1;
 end
 
-function [ theta,rho ] = ransacfitline( pts,iterNum,thDist,noPts )
+function [ theta,rho ] = ransacfitline( pts,iterNum,thDist,noPts, minD )
     %RANSAC Use RANdom SAmple Consensus to fit a line
     %	RESCOEF = RANSAC(PTS,ITERNUM,THDIST,THINLRRATIO) PTS is 2*n matrix including 
     %	n points, ITERNUM is the number of iteration, THDIST is the inlier 
@@ -44,11 +42,17 @@ function [ theta,rho ] = ransacfitline( pts,iterNum,thDist,noPts )
 
     for p = 1:iterNum
         % 1. fit using 2 random points
+        
         sampleIdx = randIndex(ptNum,sampleNum);
         ptSample = pts(:,sampleIdx);
         d = ptSample(:,2)-ptSample(:,1);
+       
+        if norm(d) < minD
+            continue;
+        end
+        
         d = d/norm(d); % direction vector of the line
-
+       
         % 2. count the inliers, if more than thInlr, refit; else iterate
         n = [-d(2),d(1)]; % unit normal vector of the line
         dist1 = n*(pts-repmat(ptSample(:,1),1,ptNum));

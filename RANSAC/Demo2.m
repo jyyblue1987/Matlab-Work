@@ -5,7 +5,7 @@
 % close all
 clear all
 clc
-inIM = imread('line.jpg');
+inIM = imread('Needle.jpg');
 inIM = double(inIM);
 inIM = (inIM(:,:,1) + inIM(:,:,2) + inIM(:,:,3))/3;
 [M, N] = size(inIM);

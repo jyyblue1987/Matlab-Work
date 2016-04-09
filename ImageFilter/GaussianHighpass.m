@@ -10,6 +10,8 @@ p=m/2;
 q=n/2;
 
 var = [10, 30, 50, 70];
+
+imwrite(a, 'original.tif');
 for k = 1:4
     d0=var(k);    
     for i=1:m
@@ -21,6 +23,13 @@ for k = 1:4
     filter_apply=f_shift.*low_filter;
     image_orignal=ifftshift(filter_apply);
     image_filter_apply=abs(ifft2(image_orignal));
-    figure(d0)
+    
+    formatSpec = 'Highpass Filter D0 = %d';
+    str = sprintf(formatSpec, var(5-k))    
+    figure('name', str)    
     imshow(image_filter_apply,[])
+    
+    formatSpec = 'Highpass Filter_D0 = %d.bmp';
+    str = sprintf(formatSpec, var(5-k))        
+    imwrite(uint8(image_filter_apply), str)
 end 

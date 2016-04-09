@@ -19,10 +19,18 @@ for k = 1:4
         end
     end
     
-    
     filter_apply=f_shift.*low_filter;
     image_orignal=ifftshift(filter_apply);
     image_filter_apply=abs(ifft2(image_orignal));
     figure(d0)
     imshow(image_filter_apply,[])
+    
+    formatSpec = 'Lowpass Filter D0 = %d';
+    str = sprintf(formatSpec, var(5-k))    
+    figure('name', str)    
+    imshow(image_filter_apply,[])
+    
+    formatSpec = 'Lowpass Filter_D0 = %d.bmp';
+    str = sprintf(formatSpec, var(5-k))        
+    imwrite(uint8(image_filter_apply), str)
 end    

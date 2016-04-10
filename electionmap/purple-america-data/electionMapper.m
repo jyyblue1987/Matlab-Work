@@ -75,13 +75,9 @@ varargout{1} = handles.output;
 
 % --- Executes on button press in btn_usa.
 function btn_usa_Callback(hObject, eventdata, handles)
+setGlobalRegion('USA')
+h_year = electionYear;
 
-mapBoundaries = getBoundaryDataFromFile('data/USA.txt')
-
-regionColor = regionPureColor('data/USA2012.txt', 'USA')
-
-figure;
-plotMap(regionColor, mapBoundaries, 'USA')
 
 % hObject    handle to btn_usa (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -100,3 +96,8 @@ function bnt_usacounty_Callback(hObject, eventdata, handles)
 % hObject    handle to bnt_usacounty (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+function setGlobalRegion(val)
+global region
+region = val;
+

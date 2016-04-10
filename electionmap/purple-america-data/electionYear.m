@@ -77,8 +77,8 @@ r = region;
 
 function showElectionMap(year)
 region = getGlobalRegion();
-mapBoundaries = getBoundaryDataFromFile(['data/' region '.txt']);
-regionColor = regionPureColor(['data/' region year '.txt'], region);
+[mapBoundaries regionLevel] = getBoundaryDataFromFile(['data/' region '.txt']);
+regionColor = regionPureColor({regionLevel}, year);
 figure;
 plotMap(regionColor, mapBoundaries, 'USA');
 

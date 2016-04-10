@@ -1,4 +1,4 @@
-function  mapBoundaries = getBoundaryDataFromFile( fileName)
+function  [mapBoundaries level] = getBoundaryDataFromFile( fileName)
 %reads from input file that contains geographic data and creates a
 %structure array
 %    Inputs: fileName is a string of the file that has the geographic data
@@ -34,7 +34,8 @@ while ~feof(fid)
     end
     fgetl(fid); %discard the blank line
 end
-fclose(fid);
 
+fclose(fid);
+level = region;
 end
 

@@ -72,7 +72,6 @@ function varargout = electionMapper_OutputFcn(hObject, eventdata, handles)
 % Get default command line output from handles structure
 varargout{1} = handles.output;
 
-
 % --- Executes on button press in btn_usa.
 function btn_usa_Callback(hObject, eventdata, handles)
 setGlobalRegion('USA');

@@ -90,7 +90,7 @@ function regionColor = regionColorMap(regionLevel, year, type)
 
         while ~feof(fid)
             election = fgetl(fid); %the line that says USA or State Name        
-            data = textscan(election, '%s %f %f %f ', 'delimiter', ',') 
+            data = textscan(election, '%s %f %f %f ', 'delimiter', ','); 
             name = char(data{1,1});
             my_data = cell2mat(data(2:4));
             regionColor(regionNumber).regionName=[level '_' lower(name)];   
@@ -104,22 +104,28 @@ function regionColor = regionColorMap(regionLevel, year, type)
             end
                 
             regionColor(regionNumber).color = [r, g, b];
-            regionNumber = regionNumber + 1
+            regionNumber = regionNumber + 1;
         end
         fclose(fid);
     end
 end
 
 function showElectionMap(year)
-region = getGlobalRegion();
-[mapBoundaries regionLevel] = getBoundaryDataFromFile(['data/' region '.txt']);
-regionColor = regionColorMap(regionLevel, year, 0);
-figure;
-plotMap(regionColor, mapBoundaries, 'USA');
+    region = getGlobalRegion();
 
-regionColor = regionColorMap(regionLevel, year, 1);
-figure;
-plotMap(regionColor, mapBoundaries, 'USA');
+    message = ['Generating election results maps for ' region ' in ' year];
+    disp(message);
+
+    [mapBoundaries regionLevel] = getBoundaryDataFromFile(['data/' region '.txt']);
+    
+    regionColor = regionColorMap(regionLevel, year, 1);
+    figure;
+    plotMap(regionColor, mapBoundaries, ['Red Blue ' region ' ' year]);
+
+    regionColor = regionColorMap(regionLevel, year, 0);
+    figure;
+    plotMap(regionColor, mapBoundaries, ['Purple ' region ' ' year]);
+
 end
 
 % --- Executes on button press in year_1960.

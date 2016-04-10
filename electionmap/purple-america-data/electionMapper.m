@@ -72,6 +72,7 @@ function varargout = electionMapper_OutputFcn(hObject, eventdata, handles)
 % Get default command line output from handles structure
 varargout{1} = handles.output;
 
+
 % --- Executes on button press in btn_usa.
 function btn_usa_Callback(hObject, eventdata, handles)
 setGlobalRegion('USA');
@@ -85,16 +86,30 @@ h_year = electionYear;
 
 % --- Executes on button press in btn_state.
 function btn_state_Callback(hObject, eventdata, handles)
-% hObject    handle to btn_state (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+num = 1;
+while true
+    if num == 1
+        prompt = 'State Abbreviation: ';
+    else
+        prompt = 'Incorrect State Abbreviation. Try again: ';
+    end
+        
+    region = input(prompt);
+    path = ['data/' region '.txt'];
+    if exist(path, 'file') == 2
+        break;   
+    end
+    num = num + 1;
+end    
+setGlobalRegion(region);
+h_year = electionYear;
 
 
 % --- Executes on button press in bnt_usacounty.
 function bnt_usacounty_Callback(hObject, eventdata, handles)
-setGlobalRegion('USA-county');
+setGlobalRegion('USA-county')
 h_year = electionYear;
 
 function setGlobalRegion(val)
-global region;
+global region
 region = val;

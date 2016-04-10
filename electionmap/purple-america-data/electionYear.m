@@ -22,7 +22,7 @@ function varargout = electionYear(varargin)
 
 % Edit the above text to modify the response to help electionYear
 
-% Last Modified by GUIDE v2.5 10-Apr-2016 13:07:30
+% Last Modified by GUIDE v2.5 10-Apr-2016 15:51:44
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -60,7 +60,6 @@ guidata(hObject, handles);
 % UIWAIT makes electionYear wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
-
 % --- Outputs from this function are returned to the command line.
 function varargout = electionYear_OutputFcn(hObject, eventdata, handles) 
 % varargout  cell array for returning output args (see VARARGOUT);
@@ -70,6 +69,11 @@ function varargout = electionYear_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
+
+
+function r = getGlobalRegion
+global region
+r = region;
 
 function showElectionMap(year)
 region = getGlobalRegion();
@@ -83,61 +87,42 @@ function year_1960_Callback(hObject, eventdata, handles)
 showElectionMap('1960')
 
 
-% --- Executes on button press in year_1964.
 function year_1964_Callback(hObject, eventdata, handles)
 showElectionMap('1964')
-% hObject    handle to year_1964 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-
-% --- Executes on button press in year_1968.
 function year_1968_Callback(hObject, eventdata, handles)
 showElectionMap('1968')
-% hObject    handle to year_1968 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
 
-% --- Executes on button press in year_1972.
 function year_1972_Callback(hObject, eventdata, handles)
 showElectionMap('1972')
-% hObject    handle to year_1972 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-
-% --- Executes on button press in year_1976.
 function year_1976_Callback(hObject, eventdata, handles)
 showElectionMap('1976')
-% hObject    handle to year_1976 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-
-% --- Executes on button press in year_1980.
 function year_1980_Callback(hObject, eventdata, handles)
 showElectionMap('1980')
-% hObject    handle to year_1980 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-
-% --- Executes on button press in year_1984.
 function year_1984_Callback(hObject, eventdata, handles)
 showElectionMap('1984')
-% hObject    handle to year_1984 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-
-% --- Executes on button press in year_1988.
 function year_1988_Callback(hObject, eventdata, handles)
 showElectionMap('1988')
-% hObject    handle to year_1988 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-function r = getGlobalRegion
-global region
-r = region;
+function year_1992_Callback(hObject, eventdata, handles)
+showElectionMap('1992')
+
+function year_1996_Callback(hObject, eventdata, handles)
+showElectionMap('1996')
+
+function year_2000_Callback(hObject, eventdata, handles)
+showElectionMap('2000')
+
+function year_2004_Callback(hObject, eventdata, handles)
+showElectionMap('2004')
+
+function year_2008_Callback(hObject, eventdata, handles)
+showElectionMap('2008')
+
+function year_2012_Callback(hObject, eventdata, handles)
+showElectionMap('2012')

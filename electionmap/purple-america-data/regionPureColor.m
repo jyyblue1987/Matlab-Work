@@ -16,10 +16,11 @@ function regionColor = regionPureColor(regionLevel, year)
             name = char(data{1,1});
             my_data = cell2mat(data(2:4));
             regionColor(regionNumber).regionName=[level '_' lower(name)];   
-            x = my_data(1)
-            y = my_data(2)
-            z = my_data(3)
-            regionColor(regionNumber).color = getPurpleColor(x, y, z)
+            x = my_data(1);
+            y = my_data(2);
+            z = my_data(3);
+            [r, g, b] = getPurpleColor(x, y, z);
+            regionColor(regionNumber).color = [r, g, b];
             regionNumber = regionNumber + 1
         end
         fclose(fid);
@@ -28,7 +29,7 @@ function regionColor = regionPureColor(regionLevel, year)
 
 end
 
-function [R, G, B] = getPrimaryColor(republicanVotes, democrateVotes, otherVotes)
+function [R, G, B] = getPrimaryColor(x, y, z)
     R = 1
     G = 0
     B = 0
@@ -37,7 +38,7 @@ end
 function [R, G, B] = getPurpleColor(x, y, z)
     sum = x + y + z;
     R = x / sum;
-    G = y / sum;
-    B = z / sum;
+    G = z / sum;
+    B = y / sum;
 end
 

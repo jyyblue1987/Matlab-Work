@@ -22,7 +22,7 @@ function varargout = electionMapper(varargin)
 
 % Edit the above text to modify the response to help electionMapper
 
-% Last Modified by GUIDE v2.5 10-Apr-2016 12:53:59
+% Last Modified by GUIDE v2.5 10-Apr-2016 16:09:33
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -75,7 +75,7 @@ varargout{1} = handles.output;
 
 % --- Executes on button press in btn_usa.
 function btn_usa_Callback(hObject, eventdata, handles)
-setGlobalRegion('USA')
+setGlobalRegion('USA');
 h_year = electionYear;
 
 
@@ -93,11 +93,9 @@ function btn_state_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in bnt_usacounty.
 function bnt_usacounty_Callback(hObject, eventdata, handles)
-% hObject    handle to bnt_usacounty (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+setGlobalRegion('USA-county');
+h_year = electionYear;
 
 function setGlobalRegion(val)
-global region
+global region;
 region = val;
-

@@ -18,7 +18,7 @@ for i=1:length(mapBoundaries)
     regionName = mapBoundaries(i).regionName;
     indexOfRegion = find(ismember(regionNames, mapBoundaries(i).regionName));
     
-    if (indexOfRegion >= 0)
+    if (~isempty(indexOfRegion))
         color = regionColor(indexOfRegion).color;
         fill(y,x, color);
     end

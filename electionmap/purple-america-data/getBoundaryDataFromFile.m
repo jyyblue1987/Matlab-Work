@@ -8,12 +8,21 @@ function  mapBoundaries = getBoundaryDataFromFile( fileName)
 fid = fopen(fileName,'rt');
 mapBoundaries = struct;
 regionNumber = 1;
+levelNumber = 1;
 
+region = {};
 while ~feof(fid)
     nameRegion = fgetl(fid); %read name of region
     if ( nameRegion ~= -1 )
         regionLevel = fgetl(fid); %the line that says USA or State Name
         mapBoundaries(regionNumber).regionName = [regionLevel '_' lower(nameRegion)];
+        
+        indexOfRegion = find(ismember(region, regionLevel));
+        if (isempty(indexOfRegion))
+            region{levelNumber} = [regionLevel];
+            levelNumber = levelNumber + 1;
+        end                
+        
         numPoints = str2num ( fgetl(fid) ); %number of points for this region
         for i=1:numPoints
             latLongLine = fgetl(fid);
@@ -26,7 +35,6 @@ while ~feof(fid)
     fgetl(fid); %discard the blank line
 end
 fclose(fid);
-
 
 end
 

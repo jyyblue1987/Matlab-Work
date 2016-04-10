@@ -72,57 +72,57 @@ varargout{1} = handles.output;
 
 
 function r = getGlobalRegion
-global region
+global region;
 r = region;
 
 function showElectionMap(year)
 region = getGlobalRegion();
-mapBoundaries = getBoundaryDataFromFile(['data/' region '.txt'])
-regionColor = regionPureColor(['data/' region year '.txt'], region)
+mapBoundaries = getBoundaryDataFromFile(['data/' region '.txt']);
+regionColor = regionPureColor(['data/' region year '.txt'], region);
 figure;
-plotMap(regionColor, mapBoundaries, 'USA')
+plotMap(regionColor, mapBoundaries, 'USA');
 
 % --- Executes on button press in year_1960.
-function year_1960_Callback(hObject, eventdata, handles)
+function year_1960_Callback(hObject, eventdata, handles);
 showElectionMap('1960')
 
 
-function year_1964_Callback(hObject, eventdata, handles)
+function year_1964_Callback(hObject, eventdata, handles);
 showElectionMap('1964')
 
-function year_1968_Callback(hObject, eventdata, handles)
+function year_1968_Callback(hObject, eventdata, handles);
 showElectionMap('1968')
 
 
-function year_1972_Callback(hObject, eventdata, handles)
+function year_1972_Callback(hObject, eventdata, handles);
 showElectionMap('1972')
 
-function year_1976_Callback(hObject, eventdata, handles)
+function year_1976_Callback(hObject, eventdata, handles);
 showElectionMap('1976')
 
-function year_1980_Callback(hObject, eventdata, handles)
+function year_1980_Callback(hObject, eventdata, handles);
 showElectionMap('1980')
 
-function year_1984_Callback(hObject, eventdata, handles)
+function year_1984_Callback(hObject, eventdata, handles);
 showElectionMap('1984')
 
-function year_1988_Callback(hObject, eventdata, handles)
+function year_1988_Callback(hObject, eventdata, handles);
 showElectionMap('1988')
 
-function year_1992_Callback(hObject, eventdata, handles)
+function year_1992_Callback(hObject, eventdata, handles);
 showElectionMap('1992')
 
-function year_1996_Callback(hObject, eventdata, handles)
+function year_1996_Callback(hObject, eventdata, handles);
 showElectionMap('1996')
 
-function year_2000_Callback(hObject, eventdata, handles)
+function year_2000_Callback(hObject, eventdata, handles);
 showElectionMap('2000')
 
-function year_2004_Callback(hObject, eventdata, handles)
+function year_2004_Callback(hObject, eventdata, handles);
 showElectionMap('2004')
 
-function year_2008_Callback(hObject, eventdata, handles)
+function year_2008_Callback(hObject, eventdata, handles);
 showElectionMap('2008')
 
-function year_2012_Callback(hObject, eventdata, handles)
+function year_2012_Callback(hObject, eventdata, handles);
 showElectionMap('2012')

@@ -1,4 +1,4 @@
-function regionColor = regionPureColor(fileName)
+function regionColor = regionPureColor(fileName, regionLevel)
     fid = fopen(fileName,'rt');
     regionColor = struct;
     regionNumber = 1;
@@ -8,9 +8,9 @@ function regionColor = regionPureColor(fileName)
     while ~feof(fid)
         election = fgetl(fid); %the line that says USA or State Name        
         data = textscan(election, '%s %f %f %f ', 'delimiter', ',') 
-        name = data{1,1};
+        name = char(data{1,1});
         my_data = cell2mat(data(2:4));
-        regionColor(regionNumber).regionName=name        
+        regionColor(regionNumber).regionName=[regionLevel '_' lower(name)];   
         x = my_data(1)
         y = my_data(2)
         z = my_data(3)

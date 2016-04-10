@@ -16,18 +16,8 @@ for i=1:length(mapBoundaries)
     x =  mapBoundaries(i).latitude ;
     y =  mapBoundaries(i).longitude ;
     regionName = mapBoundaries(i).regionName;
+    indexOfRegion = find(ismember(regionNames, mapBoundaries(i).regionName));
     
-    indexOfRegion = -1;
-    for j=1;length(regionNames)
-        name = regionNames{j}
-        name = char(name)
-        k = strfind(regionName,lower(name))
-        if( k > 0 )
-            indexOfRegion = j;
-            break
-        end   
-         
-    end    
     if (indexOfRegion >= 0)
         color = regionColor(indexOfRegion).color;
         fill(y,x, color);

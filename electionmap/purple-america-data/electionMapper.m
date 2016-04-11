@@ -94,7 +94,7 @@ while true
         prompt = 'Incorrect State Abbreviation. Try again: ';
     end
         
-    region = input(prompt);
+    region = input(prompt,'s');
     path = ['data/' region '.txt'];
     if exist(path, 'file') == 2
         break;   

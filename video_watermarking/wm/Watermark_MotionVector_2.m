@@ -69,11 +69,11 @@ for st=2:lastFrame
    recons_im=uint8(zeros(mRows,nColumns)); %initialize Reconstructed image 
    
    %Initialisation
-for i=1:block_size:mRows
-    for j=1:block_size:nColumns
-        Side_Info{st}(i,j).info='H.264';
+    for i=1:block_size:mRows
+        for j=1:block_size:nColumns
+            Side_Info{st}(i,j).info='H.264';
+        end
     end
-end
     
     NumBit=0;
     for i=1:block_size:mRows

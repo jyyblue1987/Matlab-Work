@@ -68,6 +68,16 @@ for K = 2:Frame_end
     Frames_Rec(:,:,K)=Seq_r(:,:,2); % Storing Rec. Frame
     bitstream = [bitstream bits]; % Appending P-Frame bitstream ('1100...')
     X(:,:,1) = Seq_r(:,:,2); % X[1]: Refrence Frame (for the next P-Frames)
+    
+    source = uint8(Frames_Rec(:,:,K));
+    noise = uint8(VideoSeq_Input(:,:,K));
+    [peaksnr, aaa] = snr(source, noise);
+    Frames_PSNR(k, 1) = peaksnr;       
+end
+
+for k = 1:N
+    msg = sprintf('%dth Frame PSNR = %f', k, Frames_PSNR(k, 1));
+    disp(msg);
 end
 
 %% Storage
@@ -76,7 +86,6 @@ save('02ReconstructedVideo.mat','Frames_Rec');      % 2. Reconstracted Frames
 
 
 %% H.264 Decoding
-clc
 clear all;
 close all;
 %% Decoding Bitsteam
@@ -118,6 +127,9 @@ for k = 2:N
         label = GetWaterMark(frame_id)
     end  
 end
+
+
+
 % End the decoding
 %% Option: Save the decoded video and paly it
 save('03DecodedVideo.mat','Frames_Dec');

@@ -144,6 +144,8 @@ for frame = 2
 
                 mvm(i:i+bs-1,j:j+bs-1,1) = mvb(:,:,1);
                 mvm(i:i+bs-1,j:j+bs-1,2) = mvb(:,:,2);
+                global bitrate; 
+                bitrate = bitrate + 1;
 
             else    % else find the partition mode for each 8x8 sub-block
 

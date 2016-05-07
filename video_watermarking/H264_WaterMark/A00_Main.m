@@ -8,8 +8,13 @@ addpath(genpath('.'));
 %%Watermark Setup
 % Watermark label
 global BlockForEncode
+
+global bitrate;
+
 L = [0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0];  % Binary 0101110001011100
 BlockForEncode=50;% Here you may select another block
+
+bitrate = 0;
 
 
 %% Encoding Video Paramiters
@@ -80,6 +85,9 @@ for k = 1:N
     disp(msg);
 end
 
+figure;	
+plot(Frames_PSNR), xlabel('Frame No'), ylabel('PSNR'), title('PSNR Graph');
+
 %% Storage
 save('02BitStream.mat','bitstream');                % 1. Bitstream
 save('02ReconstructedVideo.mat','Frames_Rec');      % 2. Reconstracted Frames
@@ -87,7 +95,7 @@ save('02ReconstructedVideo.mat','Frames_Rec');      % 2. Reconstracted Frames
 
 %% H.264 Decoding
 clear all;
-close all;
+%close all;
 %% Decoding Bitsteam
 load 02BitStream.mat
 

@@ -112,3 +112,6 @@ axis square
 % show entropy
 gray = 255 * (Xsyn-min(Xsyn(:))) ./ (max(Xsyn(:)-min(Xsyn(:))));
 stats = graycoprops(uint8(gray))
+
+
+aveDiff = mean2(diff(image_filter_apply - Xsyn))

@@ -1,5 +1,7 @@
 function ImageFilter
 
+close all
+
 %read image file
 [a, map]=imread('Balloon.tif');
 
@@ -9,37 +11,6 @@ figure('name', 'img1')
 imshow(a)
 
 [m n]=size(a);
-
-[cA1,cH1,cV1,cD1] = dwt2(a,'bior3.7');
-
-figure('name', 'Wavelet cofficient')
-colormap gray;
-
-subplot(221)
-imagesc(cA1); title('Lowpass Approximation');
-
-subplot(222)
-imagesc(cV1); title('Vertical Detail Image');
-
-subplot(223)
-imagesc(cH1); title('Horizontal Detail Image');
-
-subplot(224)
-imagesc(cD1); title('Diagonal Detail Image');
-
-[t y] = size(cA1);
-subband = zeros(t, y);
-Xsyn = idwt2(subband,cH1,cV1,cD1,'bior3.7');
-
-figure('name', 'Reconstructed Wavelet Image');
-
-colormap gray;
-subplot(121); imagesc(a); title('Original Image'); 
-axis square
-subplot(122); imagesc(Xsyn); title('Edge map Image'); 
-axis square
-
-return;
 
 % run fft
 f_transform=fft2(a);
@@ -108,3 +79,34 @@ imshow(image_filter_apply,[]);
 
 
 
+[cA1,cH1,cV1,cD1] = dwt2(a,'bior3.7');
+
+figure('name', 'Wavelet cofficient')
+colormap gray;
+
+subplot(221)
+imagesc(cA1); title('Lowpass Approximation');
+
+subplot(222)
+imagesc(cV1); title('Vertical Detail Image');
+
+subplot(223)
+imagesc(cH1); title('Horizontal Detail Image');
+
+subplot(224)
+imagesc(cD1); title('Diagonal Detail Image');
+
+[t y] = size(cA1);
+subband = zeros(t, y);
+Xsyn = idwt2(subband,cH1,cV1,cD1,'bior3.7');
+
+figure('name', 'Reconstructed Wavelet Image');
+
+colormap gray;
+subplot(121); imagesc(a); title('Original Image'); 
+axis square
+subplot(122); imagesc(Xsyn); title('Edge map Image'); 
+axis square
+
+gray = 255 * (Xsyn-min(Xsyn(:))) ./ (max(Xsyn(:)-min(Xsyn(:))));
+stats = graycoprops(uint8(gray))

@@ -109,9 +109,19 @@ axis square
 subplot(122); imagesc(Xsyn); title('Edge map Image'); 
 axis square
 
-% show entropy
+% Compute the energy, entropy, and homogeneity feature
 gray = 255 * (Xsyn-min(Xsyn(:))) ./ (max(Xsyn(:)-min(Xsyn(:))));
-stats = graycoprops(uint8(gray))
+stats = graycoprops(uint8(gray), {'energy', 'homogeneity'} )
+entr = entropy(uint8(gray));
 
+formatSpec = 'Entropy : %f';
+str = sprintf(formatSpec, entr);    
 
-aveDiff = mean2(diff(image_filter_apply - Xsyn))
+disp(str);
+
+aveDiff = mean2(diff(image_filter_apply - Xsyn));
+
+formatSpec = 'Differenece : %f';
+str = sprintf(formatSpec, aveDiff);  
+
+disp(str);

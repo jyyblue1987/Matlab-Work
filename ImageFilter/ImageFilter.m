@@ -56,3 +56,23 @@ str = sprintf(formatSpec, d0);
 figure('name', str);    
 imshow(image_filter_apply,[]);
 
+% Create a Gaussian highpass filter 
+for i=1:m
+    for j=1:n
+        distance=sqrt((i-p)^2+(j-q)^2);
+        high_filter(i,j)=1-exp(-(distance)^2/(2*(d0^2)));
+    end
+end
+
+% apply it to the Fourier coefficients of img1
+filter_apply=f_shift.*high_filter;
+image_orignal=ifftshift(filter_apply);
+image_filter_apply=abs(ifft2(image_orignal));
+
+% displayed highpass filtered image
+formatSpec = 'Highpass Filter D0 = %d';
+str = sprintf(formatSpec, d0);    
+figure('name', str);    
+imshow(image_filter_apply,[]);
+
+

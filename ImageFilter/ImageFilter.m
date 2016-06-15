@@ -1,7 +1,7 @@
 function ImageFilter
 
 %read image file
-a=imread('Balloon.tif');
+[a, map]=imread('Balloon.tif');
 
 %convert gray 
 a = rgb2gray(a);
@@ -9,6 +9,25 @@ figure('name', 'img1')
 imshow(a)
 
 [m n]=size(a);
+
+[cA1,cH1,cV1,cD1] = dwt2(a,'bior3.7');
+
+figure('name', 'Wavelet cofficient')
+colormap gray;
+
+subplot(221)
+imagesc(cA1); title('Lowpass Approximation');
+
+subplot(222)
+imagesc(cV1); title('Vertical Detail Image');
+
+subplot(223)
+imagesc(cH1); title('Horizontal Detail Image');
+
+subplot(224)
+imagesc(cD1); title('Diagonal Detail Image');
+
+return;
 
 % run fft
 f_transform=fft2(a);
@@ -74,5 +93,6 @@ formatSpec = 'Highpass Filter D0 = %d';
 str = sprintf(formatSpec, d0);    
 figure('name', str);    
 imshow(image_filter_apply,[]);
+
 
 

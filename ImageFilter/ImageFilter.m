@@ -27,6 +27,18 @@ imagesc(cH1); title('Horizontal Detail Image');
 subplot(224)
 imagesc(cD1); title('Diagonal Detail Image');
 
+[t y] = size(cA1);
+subband = zeros(t, y);
+Xsyn = idwt2(subband,cH1,cV1,cD1,'bior3.7');
+
+figure('name', 'Reconstructed Wavelet Image');
+
+colormap gray;
+subplot(121); imagesc(a); title('Original Image'); 
+axis square
+subplot(122); imagesc(Xsyn); title('Edge map Image'); 
+axis square
+
 return;
 
 % run fft

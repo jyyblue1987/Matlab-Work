@@ -4,18 +4,71 @@ close all
 
 BW=imread('rectangle.bmp'); 
 
+% binary image
 BW(BW<200)=0; 
 
+% conver to gray
 BW = rgb2gray(BW);
 
+% get chain code with 4 neighboor
 chain_code_4 = getChainCodeFour(BW);
+
+% get chain code with 8 neighboor
 chain_code_8 = getChainCodeEight(BW);
+
+% normalize chain code with 4 neighboor
 normal_code = normalizeChainCode(chain_code_4);
+
+% different chain code with 4 neighboor
 diff_code_4 = diffChainCode(chain_code_4, 4);
 
+%ouput chain code (4 neighboor)
+formatSpec = '4 Chain code %dth : %s';
+[m n] = size(chain_code_4);
+for i=1:m
+   for j=1:n       
+        str = sprintf(formatSpec, i, chain_code_4{i,j});   
+        disp(str);
+   end
+end
+
+
+%ouput chain code (8 neighboor)
+formatSpec = '8 Chain code %dth : %s';
+[m n] = size(chain_code_8);
+for i=1:m
+   for j=1:n       
+        str = sprintf(formatSpec, i, chain_code_8{i,j});   
+        disp(str);
+   end
+end
+
+
+%ouput chain code (8 neighboor)
+formatSpec = 'Normal 4 Chain code %dth : %s';
+[m n] = size(normal_code);
+for i=1:m
+   for j=1:n       
+        str = sprintf(formatSpec, i, normal_code{i,j});   
+        disp(str);
+   end
+end
+
+%ouput chain code (4 neighboor)
+formatSpec = 'Differential 4 Chain code %dth : %s';
+[m n] = size(diff_code_4);
+for i=1:m
+   for j=1:n       
+        str = sprintf(formatSpec, i, diff_code_4{i,j});   
+        disp(str);
+   end
+end
+
+%disp('Fourier descriptor: ');
 fourie_desc = getFourierDescriptor(BW);
 
 getShapeDistribution(chain_code_8, 8);
+
 end
 
 function chain_code = getChainCodeFour(BW)
@@ -166,6 +219,7 @@ function f_code = getFourierDescriptor(BW)
         for j=1:n
             C = B{i, j};
             f_code{i,j} = frdescp(C);
+            %disp(f_code{i,j});
         end        
     end
     

@@ -2,7 +2,7 @@ function Binary
 
 close all
 
-BW=imread('rectangle.bmp'); 
+BW=imread('circle.bmp'); 
 
 BW(BW<200)=0; 
 
@@ -10,8 +10,8 @@ BW = rgb2gray(BW);
 
 chain_code_4 = getChainCodeFour(BW);
 chain_code_8 = getChainCodeEight(BW);
-
-
+normal_code = normalizeChainCode(chain_code_4);
+diff_code_4 = diffChainCode(chain_code_4, 4);
 end
 
 function chain_code = getChainCodeFour(BW)
@@ -110,5 +110,46 @@ function chain_code = getChainCodeEight(BW)
     end
 end
 
+function normal_code = normalizeChainCode(code_array)
+    [m n] = size(code_array);
+    
+    normal_code = cell(m, n);
+    for i=1:m
+        for j=1:n
+            code = code_array{i, j};
+            k = strfind(code,'0');
+            [p q] = size(k);
+            pos = k(1, 1);
+            endpos = length(code);
+        
+            if( q > 0 )
+                normal_code{i, j} = [code(pos:endpos) code(1:(pos-1))];      
+            end
+        end
+    end    
+end 
 
+function diff_code = diffChainCode(code_array, mode)
+    [m n] = size(code_array);
+    
+    diff_code = cell(m, n);
+    for i=1:m
+        for j=1:n
+            code_serial = '';
+            code = code_array{i, j};
+            len = length(code);
+            
+            prev_value = str2num(code(len-1));
+            for k=1:len
+                code_value = str2num(code(k));
+                diff_value = mod(code_value - prev_value, mode);                 
+                diff = num2str(diff_value);
+                code_serial = strcat(code_serial,diff);
+                
+                prev_value = code_value;
+            end
+            diff_code{i, j} = code_serial;
+        end
+    end    
+end
 

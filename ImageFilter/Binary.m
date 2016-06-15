@@ -2,7 +2,7 @@ function Binary
 
 close all
 
-BW=imread('circle.bmp'); 
+BW=imread('rectangle.bmp'); 
 
 BW(BW<200)=0; 
 
@@ -15,6 +15,7 @@ diff_code_4 = diffChainCode(chain_code_4, 4);
 
 fourie_desc = getFourierDescriptor(BW);
 
+getShapeDistribution(chain_code_8, 8);
 end
 
 function chain_code = getChainCodeFour(BW)
@@ -189,4 +190,27 @@ s(:,2) = m .* s(:, 2);
 s = s(:,1) + i * s(:, 2);
 z = fft(s);
 
+end
+
+function getShapeDistribution(code_array, mode)
+    [m n] = size(code_array);
+    
+    for i=1:m
+        for j=1:n
+            hist = zeros(mode, 1);
+            code = code_array{i, j};
+            len = length(code);
+            
+            formatSpec = 'Shape Distribution = %dth';
+            str = sprintf(formatSpec, i);    
+            figure('name', str);
+            
+            for k=1:len
+                code_value = str2num(code(k)); 
+                hist(code_value + 1) = hist(code_value + 1) + 1;
+            end
+            
+            bar(hist);            
+        end
+    end    
 end

@@ -12,6 +12,9 @@ chain_code_4 = getChainCodeFour(BW);
 chain_code_8 = getChainCodeEight(BW);
 normal_code = normalizeChainCode(chain_code_4);
 diff_code_4 = diffChainCode(chain_code_4, 4);
+
+fourie_desc = getFourierDescriptor(BW);
+
 end
 
 function chain_code = getChainCodeFour(BW)
@@ -153,3 +156,37 @@ function diff_code = diffChainCode(code_array, mode)
     end    
 end
 
+function f_code = getFourierDescriptor(BW)
+    [B,L,N,A] = bwboundaries(BW, 8);
+    
+    [m n] = size(B);
+    f_code = cell(m, n);
+    for i=1:m
+        for j=1:n
+            C = B{i, j};
+            f_code{i,j} = frdescp(C);
+        end        
+    end
+    
+end
+
+function z = frdescp(s)
+[np, nc] = size(s);
+if nc ~= 2
+    error('S must be of size np-by-2.')
+end
+
+if np/2 ~= round(np/2)
+    s(end + 1, :) = s(end, :);
+    np = np + 1;
+end
+
+x = 0:(np - 1);
+m = ((-1) .^ x)';
+s(:,1) = m .* s(:, 1);
+s(:,2) = m .* s(:, 2);
+
+s = s(:,1) + i * s(:, 2);
+z = fft(s);
+
+end

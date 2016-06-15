@@ -127,7 +127,7 @@ function normal_code = normalizeChainCode(code_array)
             endpos = length(code);
         
             if( q > 0 )
-                normal_code{i, j} = [code(pos:endpos) code(1:(pos-1))];      
+                normal_code{i, j} = [code(pos:endpos) fliplr(code(1:(pos-1)))];      
             end
         end
     end    

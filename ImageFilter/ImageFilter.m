@@ -78,7 +78,7 @@ figure('name', str);
 imshow(image_filter_apply,[]);
 
 
-
+% wavelet decompose
 [cA1,cH1,cV1,cD1] = dwt2(a,'bior3.7');
 
 figure('name', 'Wavelet cofficient')
@@ -96,6 +96,7 @@ imagesc(cH1); title('Horizontal Detail Image');
 subplot(224)
 imagesc(cD1); title('Diagonal Detail Image');
 
+% set approximate subband to zero
 [t y] = size(cA1);
 subband = zeros(t, y);
 Xsyn = idwt2(subband,cH1,cV1,cD1,'bior3.7');
@@ -108,5 +109,6 @@ axis square
 subplot(122); imagesc(Xsyn); title('Edge map Image'); 
 axis square
 
+% show entropy
 gray = 255 * (Xsyn-min(Xsyn(:))) ./ (max(Xsyn(:)-min(Xsyn(:))));
 stats = graycoprops(uint8(gray))

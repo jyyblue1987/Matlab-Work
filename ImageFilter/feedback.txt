@@ -1,0 +1,12 @@
+in the first task
+I could not find these requirements being fulfilled
+Please let me know
+- Perform inverse Fourier transform using ifft to recover the filtered image and display it to screen.
+In this requirement, I could not see the resulting filtered image being displayed.
+
+- Decompose the original img1 with wavelet transform. Display the wavelet coefficients as an image. Note: you will need to rescale the values to be in the range of [0 255]; otherwise, the image appears black.
+
+In this requirement, I could not see you rescaling the values to be in the range of [0 255]
+In the second task , it was required to read circles and rectangles and design a chain code & fourier descriptor function on them. 
+But I see that you haven't read the 'circle.bmp' in the code . 
+Please modify the code accordingly and let me know.

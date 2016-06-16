@@ -2,72 +2,96 @@ function Binary
 
 close all
 
-BW=imread('rectangle.bmp'); 
+for k=1:2
+    if k == 1
+        BW=imread('rectangle.bmp');         
+    else    
+        BW=imread('circle.bmp');         
+    end
+    
+    % binary image
+    BW(BW<200)=0; 
 
-% binary image
-BW(BW<200)=0; 
+    % conver to gray
+    BW = rgb2gray(BW);
 
-% conver to gray
-BW = rgb2gray(BW);
+    % get chain code with 4 neighboor
+    chain_code_4 = getChainCodeFour(BW);
 
-% get chain code with 4 neighboor
-chain_code_4 = getChainCodeFour(BW);
+    % get chain code with 8 neighboor
+    chain_code_8 = getChainCodeEight(BW);
 
-% get chain code with 8 neighboor
-chain_code_8 = getChainCodeEight(BW);
+    % normalize chain code with 4 neighboor
+    normal_code = normalizeChainCode(chain_code_4);
 
-% normalize chain code with 4 neighboor
-normal_code = normalizeChainCode(chain_code_4);
+    % different chain code with 4 neighboor
+    diff_code_4 = diffChainCode(chain_code_4, 4);
 
-% different chain code with 4 neighboor
-diff_code_4 = diffChainCode(chain_code_4, 4);
+    %ouput chain code (4 neighboor)
+    if k == 1
+        formatSpec = 'Rectangle 4 Chain code %dth : %s';     
+    else    
+        formatSpec = 'Circle 4 Chain code %dth : %s';         
+    end
+    [m n] = size(chain_code_4);
+    for i=1:m
+       for j=1:n       
+            str = sprintf(formatSpec, i, chain_code_4{i,j});   
+            disp(str);
+       end
+    end
 
-%ouput chain code (4 neighboor)
-formatSpec = '4 Chain code %dth : %s';
-[m n] = size(chain_code_4);
-for i=1:m
-   for j=1:n       
-        str = sprintf(formatSpec, i, chain_code_4{i,j});   
-        disp(str);
-   end
+
+    %ouput chain code (8 neighboor)    
+    if k == 1
+        formatSpec = 'Rectangle 8 Chain code %dth : %s';     
+    else    
+        formatSpec = 'Circle 8 Chain code %dth : %s';         
+    end
+    [m n] = size(chain_code_8);
+    for i=1:m
+       for j=1:n       
+            str = sprintf(formatSpec, i, chain_code_8{i,j});   
+            disp(str);
+       end
+    end
+
+
+    %ouput chain code (8 neighboor)
+    if k == 1
+        formatSpec = 'Rectangle Normal 4 Chain code %dth : %s';     
+    else    
+        formatSpec = 'Circle Normal 4 Chain code %dth : %s';         
+    end
+    [m n] = size(normal_code);
+    for i=1:m
+       for j=1:n       
+            str = sprintf(formatSpec, i, normal_code{i,j});   
+            disp(str);
+       end
+    end
+
+    %ouput chain code (4 neighboor)
+    if k == 1
+        formatSpec = 'Rectangle Differential 4 Chain code %dth : %s';     
+    else    
+        formatSpec = 'Circle Differential 4 Chain code %dth : %s';         
+    end
+    [m n] = size(diff_code_4);
+    for i=1:m
+       for j=1:n       
+            str = sprintf(formatSpec, i, diff_code_4{i,j});   
+            disp(str);
+       end
+    end
+
+    %disp('Fourier descriptor: ');
+    fourie_desc = getFourierDescriptor(BW);
+
+    getShapeDistribution(chain_code_8, 8, k);
 end
 
 
-%ouput chain code (8 neighboor)
-formatSpec = '8 Chain code %dth : %s';
-[m n] = size(chain_code_8);
-for i=1:m
-   for j=1:n       
-        str = sprintf(formatSpec, i, chain_code_8{i,j});   
-        disp(str);
-   end
-end
-
-
-%ouput chain code (8 neighboor)
-formatSpec = 'Normal 4 Chain code %dth : %s';
-[m n] = size(normal_code);
-for i=1:m
-   for j=1:n       
-        str = sprintf(formatSpec, i, normal_code{i,j});   
-        disp(str);
-   end
-end
-
-%ouput chain code (4 neighboor)
-formatSpec = 'Differential 4 Chain code %dth : %s';
-[m n] = size(diff_code_4);
-for i=1:m
-   for j=1:n       
-        str = sprintf(formatSpec, i, diff_code_4{i,j});   
-        disp(str);
-   end
-end
-
-%disp('Fourier descriptor: ');
-fourie_desc = getFourierDescriptor(BW);
-
-getShapeDistribution(chain_code_8, 8);
 
 end
 
@@ -246,7 +270,7 @@ z = fft(s);
 
 end
 
-function getShapeDistribution(code_array, mode)
+function getShapeDistribution(code_array, mode, num)
     [m n] = size(code_array);
     
     for i=1:m
@@ -255,7 +279,12 @@ function getShapeDistribution(code_array, mode)
             code = code_array{i, j};
             len = length(code);
             
-            formatSpec = 'Shape Distribution = %dth';
+            if num == 1
+                formatSpec = 'Rectangle Shape Distribution = %dth';     
+            else    
+                formatSpec = 'Circle Shape Distribution = %dth';     
+            end
+    
             str = sprintf(formatSpec, i);    
             figure('name', str);
             

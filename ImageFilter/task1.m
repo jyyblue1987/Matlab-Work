@@ -33,6 +33,15 @@ AF = mat2gray(AF); % Use mat2gray to scale the image between 0 and 1
 figure('name', 'FFT Phase')
 imshow(AF,[]); % Display the result
 
+% Perform inverse Fourier transform 
+img_recover=ifftshift(f_shift);
+img_recover=abs(ifft2(img_recover));
+
+% displayed low filtered image
+formatSpec = 'Recorverd Image';
+figure('name', formatSpec);    
+imshow(img_recover,[]);
+
 % create gausian low filter
 p=m/2;
 q=n/2;
@@ -85,16 +94,20 @@ figure('name', 'Wavelet cofficient')
 colormap gray;
 
 subplot(221)
-imagesc(cA1); title('Lowpass Approximation');
+img11 = 255 * (cA1-min(cA1(:))) ./ (max(cA1(:)-min(cA1(:))));
+imagesc(img11); title('Lowpass Approximation');
 
 subplot(222)
-imagesc(cV1); title('Vertical Detail Image');
+img12 = 255 * (cH1-min(cH1(:))) ./ (max(cH1(:)-min(cH1(:))));
+imagesc(img12); title('Vertical Detail Image');
 
 subplot(223)
-imagesc(cH1); title('Horizontal Detail Image');
+img21 = 255 * (cH1-min(cV1(:))) ./ (max(cV1(:)-min(cV1(:))));
+imagesc(img21); title('Horizontal Detail Image');
 
 subplot(224)
-imagesc(cD1); title('Diagonal Detail Image');
+img22 = 255 * (cH1-min(cD1(:))) ./ (max(cD1(:)-min(cD1(:))));
+imagesc(img22); title('Diagonal Detail Image');
 
 % set approximate subband to zero
 [t y] = size(cA1);

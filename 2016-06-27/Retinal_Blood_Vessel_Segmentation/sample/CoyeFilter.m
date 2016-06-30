@@ -2,11 +2,15 @@
 %% Computer Assisted Retinal Blood Vessel Segmentation Algorithm
 % Developed and Copyrighted by Tyler L. Coye (2015)
 %
+
+close all
+
 % Read Image
 %I = imread('13_right.jpeg');
 I = imread('R102.png');
 % Resize image for easier computation
 B = imresize(I, [584 565]);
+
 % Read image
 im = im2double(B);
 

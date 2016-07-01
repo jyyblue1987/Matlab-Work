@@ -36,7 +36,7 @@ J = adapthisteq(gray,'numTiles',[8 8],'nBins',128);
 % Apply Average Filter
 h = fspecial('average', [9 9]);
 JF = imfilter(J, h);
-figure, imshow(JF)
+%figure, imshow(JF)
 % Take the difference between the gray image and Average Filter
 Z = imsubtract(JF, J);
 %figure, imshow(Z)
@@ -51,6 +51,7 @@ BW2 = bwareaopen(BW, 100);
 
 figure, imshow(BW2);
 
+%angular partition feature
 cx = r / 2;
 cy = r / 2;
 hist = zeros(1, bin);
@@ -60,17 +61,21 @@ for i=1:r
         dx = j - cx;
         dy = i - cy;
         r2 = dx * dx + dy * dy;
+        
+        %check radius
         if( r2 > r * r / 4)
             continue;
         end
         
         count = count + 1;
         
+        %calculate angle
         angle = atan2(dy, dx);
         if( angle < 0 ) 
             angle = angle + 2 * pi;
         end
         
+        % calcuate partition number
         part = ceil(0.01 + angle / (2 * pi / bin));   
         if( part < 1 )
             part = 1;
@@ -80,14 +85,17 @@ for i=1:r
             part = bin;
         end
         
+        %countering forground pixel
         if( BW2(i, j) > 0 )
             hist(1, part) = hist(1, part) + 1;
         end
     end
 end
 
+%normalize hist
 hist = hist / r;
 
+% fft 
 feature = abs(fft(hist));
 
 end

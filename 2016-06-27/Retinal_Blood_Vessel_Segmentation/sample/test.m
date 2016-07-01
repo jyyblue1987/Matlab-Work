@@ -31,7 +31,7 @@ cluster = 3;
 [idx,C] = kmeans(feature,cluster);
 
 %calcuate query's image feature
-input = 'R207.png';
+input = 'R105.png';
 testfeature = angularPartion(input);
 
 result = zeros(1, cluster);

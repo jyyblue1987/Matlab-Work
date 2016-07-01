@@ -9,6 +9,8 @@ r = 500;
 bin = 16;
 B = imresize(I, [r r]);
 
+%figure, imshow(B);
+
 % Read image
 im = im2double(B);
 
@@ -49,7 +51,10 @@ BW = im2bw(Z, level + 0.003);
 %% Remove small pixels
 BW2 = bwareaopen(BW, 100);
 
-figure, imshow(BW2);
+%figure, imshow(BW2);
+
+%BW3 = bwmorph(BW2,'skel',Inf);
+%figure, imshow(BW3);
 
 %angular partition feature
 cx = r / 2;

@@ -24,15 +24,62 @@ for i=1:6
     end
 end
 
-dis 
+dis = dis./max(dis(:))
+
+for i=1:2:6
+    file1 = galleryname(i, :);
+    file2 = galleryname(i + 1, :);
+   figure;
+    subplot(221);imshow(imread(file1));title([file1]);
+    subplot(222);imshow(imread(file2));title([file2]);    
+    
+    ax = subplot(223);
+    distance = sprintf('Distance = %f', dis(i,i+1));
+    
+    text(0.7,0.5, distance);
+    set ( ax, 'visible', 'off')
+
+end
 
 % clustering input feature
 cluster = 3;
 [idx,C] = kmeans(feature,cluster);
 
 %calcuate query's image feature
-input = 'R105.png';
+input = 'R207.png';
 testfeature = angularPartion(input);
+
+ figure;
+ 
+for i=1:2:6
+    file1 = galleryname(i, :);
+    file2 = galleryname(i + 1, :);
+  
+    diff = testfeature - feature(i,:);
+    sv = diff.* diff;
+    dp = sum(sv);   
+    value1 = sqrt(dp);
+    
+    diff = testfeature - feature(i + 1,:);
+    sv = diff.* diff;
+    dp = sum(sv);   
+    value2 = sqrt(dp);
+    
+    if value1 > value2 
+        subplot(3, 3, (i + 1)/ 2);imshow(imread(file2));title([file2]);
+        ax = subplot(3, 3, 3 + (i + 1)/ 2);
+        distance = sprintf('Distance = %f', value2);
+    else
+        subplot(3, 3, (i + 1)/ 2);imshow(imread(file1));title([file1]);
+        ax = subplot(3, 3, 3 + (i + 1)/ 2);
+        distance = sprintf('Distance = %f', value1);
+    end
+    
+    text(0,0.5, distance);
+    set ( ax, 'visible', 'off')    
+end
+
+subplot(3, 3, 8);imshow(imread(input));title([input]);
 
 result = zeros(1, cluster);
 

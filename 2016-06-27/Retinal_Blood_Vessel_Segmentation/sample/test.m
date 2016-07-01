@@ -1,13 +1,15 @@
 close all
 
-feature = zeros(6, 16);
+bin = 16;
+galleryname = ['R102.png'; 'R103.png'; 'R104.png'; 'R105.png'; 'R106.png'; 'R107.png'];
+[n m] = size(galleryname);
 
-feature(1,:) = angularPartion('R102.png');
-feature(2,:) = angularPartion('R103.png');
-feature(3,:) = angularPartion('R104.png');
-feature(4,:) = angularPartion('R105.png');
-feature(5,:) = angularPartion('R106.png');
-feature(6,:) = angularPartion('R107.png');
+feature = zeros(n, bin);
+
+for i=1:n
+    filename = galleryname(i, :);
+    feature(i,:) = angularPartion(filename);
+end
 
 dis = zeros(6, 6);
 for i=1:6
@@ -23,7 +25,8 @@ end
 cluster = 3;
 [idx,C] = kmeans(feature,cluster);
 
-testfeature = angularPartion('R207.png');
+input = 'R207.png';
+testfeature = angularPartion(input);
 
 result = zeros(1, cluster);
 
@@ -43,6 +46,15 @@ for i =1:cluster
     end
 end
 
-result
-min_index
+for i=1:n
+    if idx(i) == min_index
+        matched = galleryname(i, :); 
+        break;
+    end
+end
+figure;
+subplot(121);imshow(imread(input));title(['Input Image: ' input]);
+subplot(122);imshow(imread(matched));title(['Matched Image: ' matched]);
+
+
 

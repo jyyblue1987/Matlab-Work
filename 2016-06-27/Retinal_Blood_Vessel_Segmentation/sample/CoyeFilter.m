@@ -41,7 +41,7 @@ JF = imfilter(J, h);
 figure, imshow(JF)
 % Take the difference between the gray image and Average Filter
 Z = imsubtract(JF, J);
-figure, imshow(Z)
+%figure, imshow(Z)
 %% Threshold using the IsoData Method
 level=isodata(Z) % this is our threshold level
 %level = graythresh(Z)
@@ -54,10 +54,13 @@ end
 
 %% Remove small pixels
 BW2 = bwareaopen(BW, 100);
+
+figure, imshow(BW2);
+
 %% Overlay
-BW2 = imcomplement(BW2);
-out = imoverlay(B, BW2, [0 0 0]);
-figure, imshow(out);
+%BW2 = imcomplement(BW2);
+%out = imoverlay(B, BW2, [0 0 0]);
+%figure, imshow(out);
 
 
 

@@ -52,6 +52,16 @@ i=i+1;
 % new T = (MAT+MBT)/2
 T(i)=round((MAT+MBT)/2);
 
+mu2=cumsum(counts(1:T(i)));
+MBT=sum(N(1:T(i)).*counts(1:T(i)))/mu2(end);
+
+mu3=cumsum(counts(T(i):end));
+MAT=sum(N(T(i):end).*counts(T(i):end))/mu3(end);
+
+i=i+1;
+T(i)=round((MAT+MBT)/2); 
+Threshold=T(i);
+    
 % STEP 3 to n: repeat step 2 if T(i)~=T(i-1)
 while abs(T(i)-T(i-1))>=1
     mu2=cumsum(counts(1:T(i)));

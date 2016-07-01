@@ -1,15 +1,13 @@
 
-%% Computer Assisted Retinal Blood Vessel Segmentation Algorithm
-% Developed and Copyrighted by Tyler L. Coye (2015)
-%
-
-close all
-
+function feature = angularPartion(filename)
 % Read Image
-%I = imread('13_right.jpeg');
-I = imread('R102.png');
+I = imread(filename);
+%I = imread('16_right.jpeg');
 % Resize image for easier computation
-B = imresize(I, [584 565]);
+
+r = 500;
+bin = 16;
+B = imresize(I, [r r]);
 
 % Read image
 im = im2double(B);
@@ -43,19 +41,56 @@ figure, imshow(JF)
 Z = imsubtract(JF, J);
 %figure, imshow(Z)
 %% Threshold using the IsoData Method
-level=isodata(Z) % this is our threshold level
+level=isodata(Z); % this is our threshold level
 %level = graythresh(Z)
 %% Convert to Binary
-if numberOfColorChannels == 3 
-    BW = im2bw(Z, level-.008);
-else
-    BW = im2bw(Z, level);
-end
+BW = im2bw(Z, level + 0.003);
 
 %% Remove small pixels
 BW2 = bwareaopen(BW, 100);
 
 figure, imshow(BW2);
+
+cx = r / 2;
+cy = r / 2;
+hist = zeros(1, bin);
+count = 0;
+for i=1:r
+    for j=1:r
+        dx = j - cx;
+        dy = i - cy;
+        r2 = dx * dx + dy * dy;
+        if( r2 > r * r / 4)
+            continue;
+        end
+        
+        count = count + 1;
+        
+        angle = atan2(dy, dx);
+        if( angle < 0 ) 
+            angle = angle + 2 * pi;
+        end
+        
+        part = ceil(0.01 + angle / (2 * pi / bin));   
+        if( part < 1 )
+            part = 1;
+        end
+        
+        if( part > bin )
+            part = bin;
+        end
+        
+        if( BW2(i, j) > 0 )
+            hist(1, part) = hist(1, part) + 1;
+        end
+    end
+end
+
+hist = hist / r;
+
+feature = abs(fft(hist));
+
+end
 
 %% Overlay
 %BW2 = imcomplement(BW2);
